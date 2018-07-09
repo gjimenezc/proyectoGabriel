@@ -1,0 +1,194 @@
+html {
+    background-image: url("../../img/heroBanner.jpg");
+    background-color: #000;
+  }
+.wrapper {
+  margin: 0 auto;
+  max-width: 1400px;  
+}
+.contactenosHeader a{
+    text-decoration: none;
+    font-size: 1em;
+    color: #aaa;
+    margin-right: 2%;
+    float: right;  
+}
+.contactenosHeader{
+    margin-bottom: 2%; 
+}
+.contactenosHeader a:hover{
+    color:  #fbb803;    
+}
+.menuCont{
+    margin: 2%;
+}
+.menuCont a{    
+    text-decoration: none;
+    color: #fbb803;
+    float: right;
+    margin-bottom: 2%;
+    /* font-size: 1.5em;
+    color: #ffffff; */
+}
+.menuCont a:hover{
+    color: #fff;
+    -webkit-transition: all 500ms ease;
+    -o-transition: all 500ms ease;
+    transition: all 500ms ease; 
+    text-align: center;
+}
+button {
+    border-style: dashed;
+    border: 4px solid;
+    border-color: #7a7979;
+    padding: 0.7% 5%;
+    border-radius: 50px;
+    background-color: transparent;   
+    color: #fbb803;
+    margin-right: 1%;   
+    cursor: pointer;
+    float: right;
+    margin-bottom: 2%;
+}
+button:hover {
+    border-style: solid;
+    border-color:#fff;
+    color: #fff;
+    -webkit-transition: all 700ms ease;
+    -o-transition: all 700ms ease;
+    transition: all 700ms ease;
+    padding: 0.7% 5%;
+    border-radius: 50px;
+}
+iframe{
+    height:710px; 
+    width:100%;
+    border-style: none;
+    box-shadow: 15px 19px 46px -13px #b8bbb8;
+    /* background: #28921f; */
+    border-radius: 50px;
+}
+.registroMed, .registroCasa {
+    position: fixed;
+    left: 2%;
+    top: 2%;
+    width: 67%;  
+}
+.filtro, .FiltroCasa {
+    border-bottom: 0.5px solid #5f8c05;
+}
+.datosMed legend{
+    font-size: 1em;
+}
+.legendLabel{
+    color: #827f7f;
+}
+#txtFiltro, #txtFiltroCasa {
+    margin-bottom: 3%;
+    width: 100%;
+}
+body {   
+    font-family: tahoma;
+    color: #fbb803;
+}
+
+h1{
+    color: #FFF;
+    font-size: 4em;
+    font-weight: 700;
+    line-height: 0.8;
+    padding: 20%;
+    text-align: center;
+    margin: 0;
+}
+h1 span {
+    color: #fbb803;
+    display: block;
+}
+h2 {
+    width: 100%;  
+    font-size: 1.5em;
+    margin-bottom: 5%;    
+}
+#tblMed, #tblCasa {
+    position: absolute;
+    top: 2%;
+    border-left: 0.5px solid grey;
+    margin-left: 37%;
+}
+#tblMed thead th {
+    min-width: 80px;
+    text-align: justify;    
+}
+#tblMed a {    
+    margin: 5px;
+    padding: 5px;   
+}
+#tblMed a:hover {
+    cursor: pointer;
+  padding: 5%;
+}
+#tblMed a.fa-edit {
+    background: #066eb3;
+    color: #fff;
+    text-align: center;
+}
+#tblMed a.fa-trash {
+    background: #d83504;
+    color: #fff;
+     text-align: center;
+}
+#tblCasa a {    
+    margin: 5px;
+    padding: 5px;   
+}
+#tblCasa a:hover {
+    cursor: pointer;
+  padding: 5%;
+}
+#tblCasa a.fa-edit {
+    background: #066eb3;
+    color: #fff;
+    text-align: center;
+}
+#tblCasa a.fa-trash {
+    background: #d83504;
+    color: #fff;
+     text-align: center;
+}
+tbody{
+    color: #000;
+    text-align:justify;
+   /* margin-right: 3%;*/
+}
+input:focus:invalid,
+textarea:focus:invalid {
+    /* Cuando en el buscador el campo es invalido*/
+    background: #fff url(../img/invalid3.png) no-repeat 98% center;
+    box-shadow: 0 0 5px #ed2024;
+    border-color: #ed2024;
+}
+input:required:valid,
+textarea:required:valid {
+    /* when a field is considered valid by the browser */
+    background: #fff url(../img/valid3.png) no-repeat 98% center;
+    box-shadow: 0 0 5px #5cd053;
+    border-color: #28921f;
+}
+.ocultar {
+    display: none;
+}
+footer{
+    margin-top: 2%;
+}
+.redesSociales a{
+    position: relative; 
+    text-decoration: none;
+    font-size:  1.3em;
+    color:  #827f7f;
+    float:  right; 
+    margin: 0 1% 1% 0;     
+}
+.redesSociales a:hover{
+    color:  #fbb803;        
+}

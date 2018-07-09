@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous"> 
+    <link rel="stylesheet" href="./css/generales/reset.css">
+    <link rel="stylesheet" href="./css/generales/style.css">
+    <link rel="stylesheet" href="./css/proyecto/formularioProyecto.css">
+  </head>
+  <body>
+    <div class="wrapperFormulario">
+        <form>
+            <h3>Datos Generales:</h3>
+
+            <div class="field">
+              <input type="number" id="codigoProyecto" placeholder="Código"></input>
+              <label for="codigoProyecto">Código</label>
+            </div>
+         
+            <div class="field">
+              <input type="text" id="fechaProyecto" placeholder="Fecha de creación"></input>
+              <label for="fechaProyecto">Fecha de creación</label>
+            </div>  
+            
+            <div class="field">
+              <input type="text" id="nombreProyecto" placeholder="Nombre">
+              <label for="nombreProyecto">Nombre</label>
+            </div>  
+            
+            <div class="field">
+              <textarea id="descripcionProyecto" rows="5" placeholder="Descripción"></textarea>
+              <label for="descripcionProyecto">Descripción</label>
+            </div>
+            
+            <div class="field">
+              <input id="estadoProyecto"></input>
+              <label for="estadoProyecto">Estado</label> 
+            </div>
+            
+            <div class="field">
+              <input type="date" id="fechaEntrega" placeholder="Fecha de entrega">
+              <label for="fechaEntrega">Fecha de entrega</label>
+            </div> 
+
+            <h3>Profesores:</h3>
+
+            <div class="field">
+              <select id="profesorLider"></select> 
+              <label for="profesorLider">Líder</label>
+            </div> 
+            
+            <div class="field">
+              <select id="profesorTecnico"></select> 
+              <label for="profesorTecnico">Técnico</label>
+            </div>
+
+            <button type="button" id="btnGuardar" class="btn-guardar">Guardar</button>  
+        </form>
+    </div>
+    <script src="./js/jquery-3.3.1.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2"></script>
+    <script src="./js/proyecto/controlador_proyecto_form.js"></script>
+    <script src="./js/proyecto/servicio_proyecto_form.js"></script>
+  </body>
+</html>
