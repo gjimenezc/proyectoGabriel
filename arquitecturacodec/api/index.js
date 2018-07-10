@@ -64,6 +64,9 @@ app.use( function(req, res, next) {
  */
 const proyecto = require('./components/proyecto/proyecto.route');
 const cliente = require('./components/cliente/cliente.route');
+const estudiante = require('./components/estudiante/estud.route');
+const profesor = require('./components/profesor/profesores.route');
+const estudianteAsignado = require('./components/proyecto/estudiantes.route');
 
 
 /**
@@ -71,6 +74,9 @@ const cliente = require('./components/cliente/cliente.route');
  */
 app.use('/api', proyecto);
 app.use('/api', cliente);
+app.use('/api', estudiante);
+app.use('/api', profesor);
+app.use('/api', estudianteAsignado);
 
 // Se guarda todo lo que se ha realizado
 module.exports = app;

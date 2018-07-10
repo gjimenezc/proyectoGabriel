@@ -10,32 +10,31 @@ Responsabilidades del controlador
 'use strict';
 
 //variables globales------------------------------------------
-var btnGuardarProyecto = document.querySelector('#btnGuardar');
-var inputCodigo = document.querySelector('#codigoProyecto');
-var inputFechaCreacion = document.querySelector('#fechaProyecto');
-var inputNombre = document.querySelector('#nombreProyecto');
-var inputDescripcion = document.querySelector('#descripcionProyecto');
-var inputEstado = document.querySelector('#estadoProyecto');
-var inputFechaEntrega = document.querySelector('#fechaEntrega');
-var selectProfesorLider = document.querySelector('#profesorLider');
-var selectProfesorTecnico = document.querySelector('#profesorTecnico');
+const btnGuardarProyecto = document.querySelector('#btnGuardar');
+const inputCodigo = document.querySelector('#codigoProyecto');
+const inputFechaCreacion = document.querySelector('#fechaProyecto');
+const inputNombre = document.querySelector('#nombreProyecto');
+const inputDescripcion = document.querySelector('#descripcionProyecto');
+const inputEstado = document.querySelector('#estadoProyecto');
+const inputFechaEntrega = document.querySelector('#fechaEntrega');
+const selectProfesorLider = document.querySelector('#profesorLider');
+const selectProfesorTecnico = document.querySelector('#profesorTecnico');
 
 //listeners---------------------------------------------------
 btnGuardarProyecto.addEventListener('click',function(){
     obtenerDatosProyecto();
-    ftnCodigoRegistrado();
 });
 
 //loads------------------------------------------------------
 window.onload = function(){
     let fecha = ftnFechaHoy();
-    let codigo = ftnGenerarCodigo();
+    let codigo = ftnGenerarCodigo(obtenerListaProyectos());
     let listaProfesores = obtenerLista();
 
     limpiarFormulario();
     ftnCamposAnnadidos(fecha,codigo);
-    ftnDropDownCreator(selectProfesorLider,listaProfesores);
-    ftnDropDownCreator(selectProfesorTecnico,listaProfesores);
+    ftnCreadorDropProfesor(selectProfesorLider,listaProfesores);
+    ftnCreadorDropProfesor(selectProfesorTecnico,listaProfesores);
     
 };
 
@@ -44,16 +43,20 @@ function obtenerDatosProyecto(){
     let infoProyecto =[];
     let bError = false;
 
-    let gCodigo = inputCodigo.innerHTML
+    let gCodigo = inputCodigo.value;
     let gFechaCreacion = ftnFechaHoy();
     let sNombre = inputNombre.value;    
     let sDescripcion = inputDescripcion.value;
     let gEstado = inputEstado.value;
     let sFechaEntrega = inputFechaEntrega.value;
-    let sProfesorLider = selectProfesorLider.value;
-    let sProfesorTecnico = selectProfesorTecnico.value;
+    let optionProfLider = selectProfesorLider.options.selectedIndex;
+    let sProfLiderNombre = selectProfesorLider.options[optionProfLider].innerHTML;
+    let sPofLiderId = selectProfesorLider.value;
+    let optionProfTecnico = selectProfesorTecnico.options.selectedIndex;
+    let sProfTecnicoNombre = selectProfesorTecnico.options[optionProfTecnico].innerHTML;
+    let sProfTecnicoId = selectProfesorTecnico.value;
 
-    infoProyecto.push(gCodigo,gFechaCreacion[1],sNombre,sDescripcion,gEstado,sFechaEntrega,sProfesorLider,sProfesorTecnico);
+    infoProyecto.push(gCodigo,gFechaCreacion,sNombre,sDescripcion,gEstado,sFechaEntrega,sPofLiderId,sProfLiderNombre,sProfTecnicoId,sProfTecnicoNombre);
     
     bError = validar();
     if(bError == true){
@@ -134,22 +137,21 @@ function limpiarFormulario(){
 }
 
 
-function ftnDropDownCreator(pElemento,pListaDatos){
+function ftnCreadorDropProfesor(pElemento,pListaDatos){
 
     for (let i = 0; i < pListaDatos.length; i++) {
         
-        let cedula = pListaDatos[i]['Cedula'];
+        let id = pListaDatos[i]['_id'];
         let nombre = pListaDatos[i]['Nombre'];
-        let apellido = pListaDatos[i]['PrimerApellido'];
+        let apellido = pListaDatos[i]['Apellido'];
         let optionElement = document.createElement("option")
-        let nodeTexto = document.createTextNode("Cédula: " + cedula + " Nombre: " + nombre + " Apellido: " + apellido);
+        let nodeTexto = document.createTextNode( nombre + " " + apellido);
 
         optionElement.appendChild(nodeTexto);
-        optionElement.setAttribute('value',cedula);
+        optionElement.setAttribute('value',id);
         pElemento.appendChild(optionElement);
         
     }
-
 };
 
 function ftnCamposAnnadidos (pFecha,pCodigo){
@@ -163,4 +165,5 @@ function ftnCamposAnnadidos (pFecha,pCodigo){
     inputEstado.value = "aceptado";
     inputEstado.setAttribute('disabled',true);
 };
+
 

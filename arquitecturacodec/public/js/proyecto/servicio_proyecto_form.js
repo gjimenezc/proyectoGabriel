@@ -8,8 +8,7 @@ Responsabilidades del servicio
 'use strict';
 
 //variables globales--------------------------------
-var ultimoCodigoProyectoRegistrado = null;
-var ultimoCodigoProyecto = null;
+
 
 //funciones--------------------------------------
 function registrarProyecto(pProyecto){
@@ -24,11 +23,13 @@ function registrarProyecto(pProyecto){
             codigo : pProyecto[0],
             fechaCreacion : pProyecto[1],
             nombre : pProyecto[2],
-            estado : pProyecto[3],
-            fechaEntrega : pProyecto[4],
-            profesorLider : pProyecto[5],
-            profesorTecnico : pProyecto[6],
-            estudiantes : pProyecto[7]
+            descripcion : pProyecto[3],
+            estado : pProyecto[4],
+            fechaEntrega : pProyecto[5],
+            idLider : pProyecto[6],
+            nombreLider : pProyecto[7],
+            idTecnico : pProyecto[8],
+            nombreTecnico : pProyecto[9]
         }
       });
     
@@ -47,7 +48,7 @@ function obtenerLista(){
 
     let respuesta = '';
     let peticion = $.ajax({
-        url : 'http://localhost:4000/api/listarClientes',
+        url : 'http://localhost:4000/api/listarProfesores',
         type : 'get',
         contentType : 'application/x-www-form-urlencoded; charset=utf-8',
         dataType : 'json',
@@ -67,35 +68,68 @@ function obtenerLista(){
 
       return respuesta;
     
-    return listaPersonas;
+    return lista;
 }
 
-function ftnGenerarCodigo (){
-    let codigo = null;
+function obtenerListaProyectos(){
+    let lista = [];
 
-    if (ultimoCodigoProyectoRegistrado==null){
-        codigo = 1;
-        ultimoCodigoProyectoRegistrado = codigo;
-        return codigo;
-    }else{
-        codigo = ultimoCodigoProyectoRegistrado ++;
-        ultimoCodigoProyecto = codigo;
-        return codigo;
-    }  
-};
+    let respuesta = '';
+    let peticion = $.ajax({
+        url : 'http://localhost:4000/api/listarProyecto',
+        type : 'get',
+        contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+        dataType : 'json',
+        async : false,
+        data:{
+            
+        }
+      });
+    
+      peticion.done(function(response){
+       respuesta = response;
+      });
+    
+      peticion.fail(function(response){
+       
+      });
 
-function ftnCodigoRegistrado (){
-
-    ultimoCodigoProyectoRegistrado= ultimoCodigoProyecto;
+      return respuesta;
+    
+    return lista;
 }
 
 function ftnFechaHoy (){
 
     let fecha = new Date();
-    // let fechaGuardar = String(fecha.getFullYear() + "-" + fecha.getMonth() + "-" + fecha.getDate());
-    let textoFecha = fecha.toLocaleDateString();
-    
+    let dd = fecha.getDate();
+    let mm = fecha.getMonth()+1;
+    let yyyy = fecha.getFullYear();
+
+    if(dd<10) {
+        dd = '0'+dd
+    } 
+
+    if(mm<10) {
+    mm = '0'+mm
+    } 
+
+    let textoFecha = dd + '/' + mm + '/' + yyyy;
+  
     return textoFecha;
 }
+
+function ftnGenerarCodigo (pListaDatos){
+    
+    let codigo = null;
+
+    if(pListaDatos == ''){
+        codigo = 1;
+    } else {
+        codigo = Number(pListaDatos[pListaDatos.length-1]['codigo']) + 1; 
+    }
+
+    return codigo;
+};
 
 

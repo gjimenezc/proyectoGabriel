@@ -84,10 +84,10 @@
     top: 60px;
 }
 
-.
-
-.btn-guardar{
-  position: relative;
-    left: 25%;
-    top: 55px;
+.error-input{
+    background-image:url(../../img/invalid3.png); 
+    background-repeat: no-repeat; 
+    background-position: right;
+    border-bottom: 2px solid #c0392b;
 }
+

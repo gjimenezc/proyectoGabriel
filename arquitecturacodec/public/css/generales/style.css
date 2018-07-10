@@ -110,7 +110,7 @@ h2 {
     font-size: 1.5em;
     margin-bottom: 5%;    
 }
-#tblMed, #tblCasa {
+/* #tblMed, #tblCasa {
     position: absolute;
     top: 2%;
     border-left: 0.5px solid grey;
@@ -160,7 +160,7 @@ tbody{
     color: #000;
     text-align:justify;
    /* margin-right: 3%;*/
-}
+} */
 input:focus:invalid,
 textarea:focus:invalid {
     /* Cuando en el buscador el campo es invalido*/

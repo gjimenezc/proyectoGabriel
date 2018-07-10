@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous"> 
+    <link rel="stylesheet" href="./css/generales/reset.css">
+    <link rel="stylesheet" href="./css/generales/style.css">
+    <link rel="stylesheet" href="./css/proyecto/tabla_proyecto.css">
+  </head>
+  <body>
+    <div class="wrapper-header">
+      <input type="text" id="barraBusqueda" placeholder="Buscar proyecto">
+      <button type="button" id="btnAsignar" class="btn-guardar">Asignar</button> 
+    </div>
+    <div class="wrapper-listar">
+      <table id="tblProyectos">
+        <thead class="encabezados">
+            <th>Cédula</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Teléfono</th>
+            <th>Correo electrónico</th>
+        </thead>
+        <tbody>
+            
+        </tbody>
+      </table>
+    </div>
+    <script src="./js/jquery-3.3.1.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2"></script>
+    <script src="./js/proyecto/controlador_proyecto_lista.js"></script>
+    <script src="./js/proyecto/servicio_proyecto_listar.js"></script>
+  </body>
+</html>
