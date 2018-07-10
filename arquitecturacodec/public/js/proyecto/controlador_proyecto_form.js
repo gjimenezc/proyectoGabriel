@@ -23,6 +23,15 @@ const selectProfesorTecnico = document.querySelector('#profesorTecnico');
 //listeners---------------------------------------------------
 btnGuardarProyecto.addEventListener('click',function(){
     obtenerDatosProyecto();
+
+    let fecha = ftnFechaHoy();
+    let codigo = ftnGenerarCodigo(obtenerListaProyectos());
+    let listaProfesores = obtenerLista();
+    
+    limpiarFormulario();
+    ftnCamposAnnadidos(fecha,codigo);
+    ftnCreadorDropProfesor(selectProfesorLider,listaProfesores);
+    ftnCreadorDropProfesor(selectProfesorTecnico,listaProfesores);
 });
 
 //loads------------------------------------------------------

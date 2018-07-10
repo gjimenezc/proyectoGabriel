@@ -62,3 +62,7 @@ td, th, tr {
 .btn-list:hover {
 	background-color: rgba(89, 98, 117,1.0);
 }
+
+.esconder{
+  display: none;
+}

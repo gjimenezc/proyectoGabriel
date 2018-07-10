@@ -1,6 +1,13 @@
 
 'use srticit';
 
+// variables globales----------------------------------------
+const inputBusqueda = document.querySelector('#inputBusqueda');
+const tablaProyectos = document.querySelector('#tblProyectos');
+
+//listeners--------------------------------------------------
+inputBusqueda.addEventListener('keyup' , function(){ftnFiltrarListaProyectos()});
+
 //loads------------------------------------------------------
 window.onload = function(){
     ListarProyectos();
@@ -79,7 +86,38 @@ function ListarProyectos(){
 
 };
 
-function editEvent(){
+function ftnEditEvent(){
 	var id = this.name;
 	 window.location.href='../../Views/Event/modifyEvent.html?id'+'='+id;
 }
+
+function  ftnFiltrarListaProyectos (){
+
+    let criterioBusqueda = inputBusqueda.value.toUpperCase();
+    let filasProyectos = tablaProyectos.getElementsByTagName('tr');
+    let datosFila = null;
+    let datos = null;
+    let valor = null;
+    let coincide = false;
+
+    for (let i = 1; i < filasProyectos.length; i++) {    
+        datosFila = filasProyectos[i];
+        datos = datosFila.getElementsByTagName('td');
+        coincide = false;
+
+        for (let j = 0; j < datos.length; j++) {
+            valor = datos[j].innerHTML.toUpperCase();
+
+            if(valor.includes(criterioBusqueda)){
+                coincide = true;
+            } 
+        }
+        if(coincide){
+            datosFila.classList.remove('esconder');
+        } else {
+            datosFila.classList.add('esconder');
+        }
+    }
+
+   
+};
