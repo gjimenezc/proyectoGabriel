@@ -57,21 +57,21 @@ function ListarProyectos(){
         btnVer.value = 'Ver';
         btnVer.name = listaProyecto[i]['_id'];
         btnVer.classList.add('btn-list');
-        // btnVer.addEventListener('click', editEvent);
+        btnVer.addEventListener('click', ftnMostrarPoryecto);
 
         let btnAsignarEstudiantes = document.createElement('input');
         btnAsignarEstudiantes.type = 'button';
         btnAsignarEstudiantes.value = 'Asignar Estudiante';
         btnAsignarEstudiantes.name = listaProyecto[i]['_id'];
         btnAsignarEstudiantes.classList.add('btn-list');
-        // btnAsignarEstudiantes.addEventListener('click', editEvent);
+        // btnAsignarEstudiantes.addEventListener('click', ftnAsignarEstudiantes);
 
         let btnEliminar = document.createElement('input');
         btnEliminar.type = 'button';
         btnEliminar.value = 'Eliminar';
         btnEliminar.name = listaProyecto[i]['_id'];
         btnEliminar.classList.add('btn-list');
-        // btnEliminar.addEventListener('click', editEvent);
+        // btnEliminar.addEventListener('click', ftnEliminarProyecto);
 
         celdaCodigo.innerHTML = listaProyecto[i]['codigo'];
         celdaNombre.innerHTML = listaProyecto[i]['nombre'];
@@ -86,9 +86,19 @@ function ListarProyectos(){
 
 };
 
-function ftnEditEvent(){
+function ftnMostrarPoryecto(){
 	var id = this.name;
-	 window.location.href='../../Views/Event/modifyEvent.html?id'+'='+id;
+    window.location.replace('./proyecto_mostrar.html?id' + id);
+}
+
+function ftnAsignarEstudiantes(){
+	var id = this.name;
+	window.location.replace('./proyecto_asignar.html?id' + id);
+}
+
+function ftnEliminarProyecto(){
+	var idPoryecto = this.name;
+	
 }
 
 function  ftnFiltrarListaProyectos (){

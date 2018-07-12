@@ -29,7 +29,8 @@ function registrarProyecto(pProyecto){
             idLider : pProyecto[6],
             nombreLider : pProyecto[7],
             idTecnico : pProyecto[8],
-            nombreTecnico : pProyecto[9]
+            nombreTecnico : pProyecto[9],
+            desactivado : pProyecto[10]
         }
       });
     

@@ -91,3 +91,6 @@
     border-bottom: 2px solid #c0392b;
 }
 
+.modificar{
+  display: none;
+}

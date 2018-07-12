@@ -10,6 +10,7 @@ Responsabilidades del controlador
 'use strict';
 
 //variables globales------------------------------------------
+const btnEditarProyecto = document.querySelector('#btnEditar');
 const btnGuardarProyecto = document.querySelector('#btnGuardar');
 const inputCodigo = document.querySelector('#codigoProyecto');
 const inputFechaCreacion = document.querySelector('#fechaProyecto');
@@ -21,33 +22,90 @@ const selectProfesorLider = document.querySelector('#profesorLider');
 const selectProfesorTecnico = document.querySelector('#profesorTecnico');
 
 //listeners---------------------------------------------------
-btnGuardarProyecto.addEventListener('click',function(){
-    obtenerDatosProyecto();
 
-    let fecha = ftnFechaHoy();
-    let codigo = ftnGenerarCodigo(obtenerListaProyectos());
-    let listaProfesores = obtenerLista();
-    
-    limpiarFormulario();
-    ftnCamposAnnadidos(fecha,codigo);
-    ftnCreadorDropProfesor(selectProfesorLider,listaProfesores);
-    ftnCreadorDropProfesor(selectProfesorTecnico,listaProfesores);
+btnEditarProyecto.addEventListener('click',function(){
+
+    btnEditarProyecto.classList.add('modificar');
+    btnGuardarProyecto.classList.remove('modificar');
+    // ftnHabilitarEdicion();
+});
+
+btnGuardarProyecto.addEventListener('click',function(){
+
+
 });
 
 //loads------------------------------------------------------
 window.onload = function(){
-    let fecha = ftnFechaHoy();
-    let codigo = ftnGenerarCodigo(obtenerListaProyectos());
-    let listaProfesores = obtenerLista();
 
-    limpiarFormulario();
-    ftnCamposAnnadidos(fecha,codigo);
+    let idProyecto = obtenerIdProyecto();
+    let proyectos = obtenerProyectos();
+    let listaProfesores = obtenerLista();
+    
     ftnCreadorDropProfesor(selectProfesorLider,listaProfesores);
     ftnCreadorDropProfesor(selectProfesorTecnico,listaProfesores);
-    
+    ftnMostrarProyecto(idProyecto,proyectos);
+    ftnDeshabilitarCampos();
 };
 
 //funciones-------------------------------------------------
+
+function ftnMostrarProyecto (idProyecto,proyectos){
+
+    let proyectoSeleccionado = null;
+    let optionLider = selectProfesorLider.getElementsByTagName('option');
+    let optionTecnico = selectProfesorTecnico.getElementsByTagName('option');
+    let valorOption = null;
+
+    proyectos.forEach(element => {
+        if (element._id == idProyecto) {
+            proyectoSeleccionado = element;
+        }
+    });
+
+    inputCodigo.value = proyectoSeleccionado.codigo;
+    inputFechaCreacion.value = ftnFomatoFecha(proyectoSeleccionado.fechaCreacion)[0];
+    inputNombre.value = proyectoSeleccionado.nombre;
+    inputDescripcion.value = proyectoSeleccionado.descripcion;
+    inputEstado.value = proyectoSeleccionado.estado;
+    inputFechaEntrega.value = ftnFomatoFecha(proyectoSeleccionado.fechaEntrega)[1];
+    for (let i = 0; i < optionLider.length; i++) {
+        valorOption = optionLider[i].value;
+
+        if(valorOption == proyectoSeleccionado.profesorLider[0].idLider){
+            optionLider[i].setAttribute('selected',true);
+        }
+    }
+    for (let i = 0; i < optionTecnico.length; i++) {
+        valorOption = optionTecnico[i].value;
+
+        if(valorOption == proyectoSeleccionado.profesorTecnico[0].idTecnico){
+            optionTecnico[i].setAttribute('selected',true);
+        }
+    }
+};
+
+function ftnDeshabilitarCampos (){
+
+    inputCodigo.setAttribute('disabled',true);
+    inputFechaCreacion.setAttribute('disabled',true);
+    inputNombre.setAttribute('disabled',true);
+    inputDescripcion.setAttribute('disabled',true);
+    inputEstado.setAttribute('disabled',true);
+    inputFechaEntrega.setAttribute('disabled',true);
+    selectProfesorLider.setAttribute('disabled',true);
+    selectProfesorTecnico.setAttribute('disabled',true);
+
+};
+
+function obtenerIdProyecto() {
+    let paginaUrl = window.location.href;
+    let locacion = paginaUrl.lastIndexOf("?") + 3;
+    let id = paginaUrl.slice(locacion,paginaUrl.lenght); 
+ 
+    return id;
+ }; 
+
 function obtenerDatosProyecto(){
     let infoProyecto =[];
     let bError = false;
@@ -140,13 +198,6 @@ function validar(){
     return bError;
 };
 
-function limpiarFormulario(){
-    inputNombre.value = '';    
-    inputDescripcion.value = '';
-    inputFechaEntrega.value = '';
-}
-
-
 function ftnCreadorDropProfesor(pElemento,pListaDatos){
 
     for (let i = 0; i < pListaDatos.length; i++) {
@@ -164,16 +215,26 @@ function ftnCreadorDropProfesor(pElemento,pListaDatos){
     }
 };
 
-function ftnCamposAnnadidos (pFecha,pCodigo){
+function ftnFomatoFecha (pFecha){
+    let fecha = new Date();
+    let dd = fecha.getDate(pFecha);
+    let mm = fecha.getMonth(pFecha)+1;
+    let yyyy = fecha.getFullYear(pFecha);
+    let textoFecha = null;
 
-    inputFechaCreacion.value = pFecha;
-    inputFechaCreacion.setAttribute('disabled',true);
+    if(dd<10) {
+        dd = '0'+dd
+    } 
 
-    inputCodigo.value = pCodigo;
-    inputCodigo.setAttribute('disabled',true);
+    if(mm<10) {
+    mm = '0'+mm
+    } 
 
-    inputEstado.value = "aceptado";
-    inputEstado.setAttribute('disabled',true);
+    textoFecha = [dd + '/' + mm + '/' + yyyy,yyyy + "-" + mm + "-" + dd];
+  
+    return textoFecha;
 };
+
+
 
 

@@ -20,26 +20,8 @@ let proyectoSchema = new mongoose.Schema({
             nombreTecnico: {type: String, required: true},
         }
     ],
-    estudiante : [
-        {
-            idEstudiante: {type: String},
-            nombreEstudiante: {type: String},
-            coordinador: {type: Boolean}
-        }
-    ]
+    desactivado : {type: Boolean, required: true}
 });
 
 module.exports = mongoose.model('Proyecto', proyectoSchema); 
 
-// let proyectoSchema = new mongoose.Schema({
-//     codigo : {type : Number, unique : true, required : true},
-//     fechaCreacion : {type : Date, required : true},
-//     nombre : {type : String, required : true},
-//     descripcion : {type : String, required : true},
-//     estado : {type : String, required : true},
-//     fechaEntrega : {type : Date, required : true},
-//     profesorLider : {type : String, required : true},
-//     profesorTecnico : {type : String, required : true}
-// });
-
-// module.exports = mongoose.model('Proyecto', proyectoSchema); 
