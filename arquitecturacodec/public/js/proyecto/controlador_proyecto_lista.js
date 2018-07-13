@@ -23,83 +23,97 @@ function ListarProyectos(){
 
     for(let i = 0; i < listaProyecto.length; i++){
         
-        let fila = tbody.insertRow();
-        let celdaCodigo = fila.insertCell();
-        let celdaNombre = fila.insertCell();
-        let celdaProfesor = fila.insertCell();
-        let celdaEstudiante = fila.insertCell();
-        let celdaEstado = fila.insertCell();
-        let celdaFechaEntrega = fila.insertCell();
-        let btns = fila.insertCell();
-        let profesorLider = listaProyecto[i]['profesorLider'];
-        let estudianteCoordinador = buscarCoordinador(listaProyectoEstudiantes,listaProyecto);
+        if(listaProyecto[i]['desactivado']){
+            continue;
+        } else{
         
-        function buscarCoordinador(a,b){
-            let estudiante = null;
+            let fila = tbody.insertRow();
+            let celdaCodigo = fila.insertCell();
+            let celdaCliente = fila.insertCell();
+            let celdaNombre = fila.insertCell();
+            let celdaProfesor = fila.insertCell();
+            let celdaEstudiante = fila.insertCell();
+            let celdaEstado = fila.insertCell();
+            let celdaFechaEntrega = fila.insertCell();
+            let btns = fila.insertCell();
+            let cliente = listaProyecto[i]['clienteProyecto'];
+            let profesorLider = listaProyecto[i]['profesorLider'];
+            let estudianteCoordinador = buscarCoordinador(listaProyectoEstudiantes,listaProyecto);
+            let fechaEntrega = ftnFechaProyecto(listaProyecto[i]['fechaEntrega']);
+            
+            function buscarCoordinador(a,b){
+                let estudiante = null;
 
-            if(a == ''){
-                estudiante = "No hay estudiante coordinador asignado";
-            } else {for (let i = 0; i < a.length; i++) {
-                    if(a[i]['idProyecto'] == b[i]['_id'] && a[i]['coordinador'] == true){
-                        estudiante = a[i]['datosEstudiante'];
-                    } else {
-                        estudiante = "No hay estudiante coordinador asignado";
-                    }            
+                if(a == ''){
+                    estudiante = "No hay estudiante coordinador asignado";
+                } else {for (let i = 0; i < a.length; i++) {
+                        if(a[i]['idProyecto'] == b[i]['_id'] && a[i]['coordinador'] == true){
+                            estudiante = a[i]['datosEstudiante'];
+                        } else {
+                            estudiante = "No hay estudiante coordinador asignado";
+                        }            
+                    }
                 }
-            }
-            return estudiante;
-        };
-        let fecha = new Date();
-        let fechaEntrega = fecha.getDate(listaProyecto[i]['fechaEntrega']) + "/" + fecha.getMonth(listaProyecto[i]['fechaEntrega']) + "/" + fecha.getFullYear(listaProyecto[i]['fechaEntrega']);
+                return estudiante;
+            };
 
-        let btnVer = document.createElement('input');
-        btnVer.type = 'button';
-        btnVer.value = 'Ver';
-        btnVer.name = listaProyecto[i]['_id'];
-        btnVer.classList.add('btn-list');
-        btnVer.addEventListener('click', ftnMostrarPoryecto);
+            let btnVer = document.createElement('input');
+            btnVer.type = 'button';
+            btnVer.value = 'Ver';
+            btnVer.name = listaProyecto[i]['_id'];
+            btnVer.classList.add('btn-list');
+            btnVer.addEventListener('click', ftnMostrarPoryecto);
 
-        let btnAsignarEstudiantes = document.createElement('input');
-        btnAsignarEstudiantes.type = 'button';
-        btnAsignarEstudiantes.value = 'Asignar Estudiante';
-        btnAsignarEstudiantes.name = listaProyecto[i]['_id'];
-        btnAsignarEstudiantes.classList.add('btn-list');
-        // btnAsignarEstudiantes.addEventListener('click', ftnAsignarEstudiantes);
+            let btnAsignarEstudiantes = document.createElement('input');
+            btnAsignarEstudiantes.type = 'button';
+            btnAsignarEstudiantes.value = 'Asignar Estudiante';
+            btnAsignarEstudiantes.name = listaProyecto[i]['_id'];
+            btnAsignarEstudiantes.classList.add('btn-list');
+            btnAsignarEstudiantes.addEventListener('click', ftnAsignarEstudiantes);
 
-        let btnEliminar = document.createElement('input');
-        btnEliminar.type = 'button';
-        btnEliminar.value = 'Eliminar';
-        btnEliminar.name = listaProyecto[i]['_id'];
-        btnEliminar.classList.add('btn-list');
-        // btnEliminar.addEventListener('click', ftnEliminarProyecto);
+            let btnEliminar = document.createElement('input');
+            btnEliminar.type = 'button';
+            btnEliminar.value = 'Eliminar';
+            btnEliminar.name = listaProyecto[i]['_id'];
+            btnEliminar.classList.add('btn-list');
+            btnEliminar.addEventListener('click', ftnEliminarProyecto);
 
-        celdaCodigo.innerHTML = listaProyecto[i]['codigo'];
-        celdaNombre.innerHTML = listaProyecto[i]['nombre'];
-        celdaProfesor.innerHTML = profesorLider[0].nombreLider;
-        celdaEstudiante.innerHTML = estudianteCoordinador;
-        celdaEstado.innerHTML = listaProyecto[i]['estado'];
-        celdaFechaEntrega.innerHTML = fechaEntrega;
-        btns.appendChild(btnVer);
-        btns.appendChild(btnAsignarEstudiantes);
-        btns.appendChild(btnEliminar);
+            celdaCodigo.innerHTML = listaProyecto[i]['codigo'];
+            celdaCliente.innerHTML = cliente[0].nombreCliente;
+            celdaNombre.innerHTML = listaProyecto[i]['nombre'];
+            celdaProfesor.innerHTML = profesorLider[0].nombreLider;
+            celdaEstudiante.innerHTML = estudianteCoordinador;
+            celdaEstado.innerHTML = listaProyecto[i]['estado'];
+            celdaFechaEntrega.innerHTML = fechaEntrega;
+            btns.appendChild(btnVer);
+            btns.appendChild(btnAsignarEstudiantes);
+            btns.appendChild(btnEliminar);
+        }
     }
 
 };
 
 function ftnMostrarPoryecto(){
-	var id = this.name;
+	let id = this.name;
     window.location.replace('./proyecto_mostrar.html?id' + id);
-}
+};
 
 function ftnAsignarEstudiantes(){
-	var id = this.name;
+	let id = this.name;
 	window.location.replace('./proyecto_asignar.html?id' + id);
-}
+};
 
 function ftnEliminarProyecto(){
-	var idPoryecto = this.name;
-	
-}
+	let proyecto = [this.name,true];
+    desactivarProyecto(proyecto);
+    swal({
+        type : 'success',
+        title : 'Eliminación exitosa',
+        text: 'El proyecto ha sido eliminado adecuadamente',
+        confirmButtonText : 'Entendido'
+    });
+    ListarProyectos();
+};
 
 function  ftnFiltrarListaProyectos (){
 
@@ -131,3 +145,23 @@ function  ftnFiltrarListaProyectos (){
 
    
 };
+
+function ftnFechaProyecto (pFecha){
+
+    let fecha = new Date(pFecha);
+    let dd = fecha.getDate()+1;
+    let mm = fecha.getMonth()+1;
+    let yyyy = fecha.getFullYear();
+
+    if(dd<10) {
+        dd = '0'+dd
+    } 
+
+    if(mm<10) {
+    mm = '0'+mm
+    } 
+
+    let textoFecha = dd + '/' + mm + '/' + yyyy;
+  
+    return textoFecha;
+}

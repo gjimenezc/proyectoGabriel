@@ -20,7 +20,13 @@ let proyectoSchema = new mongoose.Schema({
             nombreTecnico: {type: String, required: true},
         }
     ],
-    desactivado : {type: Boolean, required: true}
+    desactivado : {type: Boolean, required: true},
+    clienteProyecto : [
+        {
+            idCliente: {type: String, required: true},
+            nombreCliente: {type: String, required: true},
+        }
+    ]
 });
 
 module.exports = mongoose.model('Proyecto', proyectoSchema); 

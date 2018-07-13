@@ -20,6 +20,7 @@ const inputEstado = document.querySelector('#estadoProyecto');
 const inputFechaEntrega = document.querySelector('#fechaEntrega');
 const selectProfesorLider = document.querySelector('#profesorLider');
 const selectProfesorTecnico = document.querySelector('#profesorTecnico');
+const selectCliente = document.querySelector('#clienteProyecto');
 
 //listeners---------------------------------------------------
 
@@ -40,10 +41,12 @@ window.onload = function(){
 
     let idProyecto = obtenerIdProyecto();
     let proyectos = obtenerProyectos();
-    let listaProfesores = obtenerLista();
+    let listaProfesores = obtenerListaProfesores();
+    let listaClientes = obtenerListaClientes();
     
     ftnCreadorDropProfesor(selectProfesorLider,listaProfesores);
     ftnCreadorDropProfesor(selectProfesorTecnico,listaProfesores);
+    ftnCreadorDropCliente(selectCliente,listaClientes);
     ftnMostrarProyecto(idProyecto,proyectos);
     ftnDeshabilitarCampos();
 };
@@ -55,6 +58,7 @@ function ftnMostrarProyecto (idProyecto,proyectos){
     let proyectoSeleccionado = null;
     let optionLider = selectProfesorLider.getElementsByTagName('option');
     let optionTecnico = selectProfesorTecnico.getElementsByTagName('option');
+    let optionCliente = selectCliente.getElementsByTagName('option');
     let valorOption = null;
 
     proyectos.forEach(element => {
@@ -69,18 +73,20 @@ function ftnMostrarProyecto (idProyecto,proyectos){
     inputDescripcion.value = proyectoSeleccionado.descripcion;
     inputEstado.value = proyectoSeleccionado.estado;
     inputFechaEntrega.value = ftnFomatoFecha(proyectoSeleccionado.fechaEntrega)[1];
-    for (let i = 0; i < optionLider.length; i++) {
-        valorOption = optionLider[i].value;
+    ftnAsignarOpcion(optionCliente,proyectoSeleccionado.clienteProyecto[0].idCliente);
+    ftnAsignarOpcion(optionLider,proyectoSeleccionado.profesorLider[0].idLider);
+    ftnAsignarOpcion(optionTecnico,proyectoSeleccionado.profesorTecnico[0].idTecnico);
+   
+};
 
-        if(valorOption == proyectoSeleccionado.profesorLider[0].idLider){
-            optionLider[i].setAttribute('selected',true);
-        }
-    }
-    for (let i = 0; i < optionTecnico.length; i++) {
-        valorOption = optionTecnico[i].value;
+function ftnAsignarOpcion (pOpcion,pId){
+    let valorOption = null;
+    
+    for (let i = 0; i < pOpcion.length; i++) {
+        valorOption = pOpcion[i].value;
 
-        if(valorOption == proyectoSeleccionado.profesorTecnico[0].idTecnico){
-            optionTecnico[i].setAttribute('selected',true);
+        if(valorOption == pId){
+            pOpcion[i].setAttribute('selected',true);
         }
     }
 };
@@ -93,6 +99,7 @@ function ftnDeshabilitarCampos (){
     inputDescripcion.setAttribute('disabled',true);
     inputEstado.setAttribute('disabled',true);
     inputFechaEntrega.setAttribute('disabled',true);
+    selectCliente.setAttribute('disabled',true);
     selectProfesorLider.setAttribute('disabled',true);
     selectProfesorTecnico.setAttribute('disabled',true);
 
@@ -105,6 +112,60 @@ function obtenerIdProyecto() {
  
     return id;
  }; 
+
+
+function ftnCreadorDropProfesor(pElemento,pListaDatos){
+
+    for (let i = 0; i < pListaDatos.length; i++) {
+        
+        let id = pListaDatos[i]['_id'];
+        let nombre = pListaDatos[i]['Nombre'];
+        let apellido = pListaDatos[i]['Apellido'];
+        let optionElement = document.createElement("option")
+        let nodeTexto = document.createTextNode( nombre + " " + apellido);
+
+        optionElement.appendChild(nodeTexto);
+        optionElement.setAttribute('value',id);
+        pElemento.appendChild(optionElement);
+        
+    }
+};
+
+function ftnCreadorDropCliente(pElemento,pListaDatos){
+
+    for (let i = 0; i < pListaDatos.length; i++) {
+        
+        let id = pListaDatos[i]['_id'];
+        let nombre = pListaDatos[i]['Nombre'];
+        let optionElement = document.createElement("option")
+        let nodeTexto = document.createTextNode(nombre);
+
+        optionElement.appendChild(nodeTexto);
+        optionElement.setAttribute('value',id);
+        pElemento.appendChild(optionElement);
+        
+    }
+};
+
+function ftnFomatoFecha (pFecha){
+    let fecha = new Date(pFecha);
+    let dd = fecha.getDate()+1;
+    let mm = fecha.getMonth()+1;
+    let yyyy = fecha.getFullYear();
+    let textoFecha = null;
+
+    if(dd<10) {
+        dd = '0'+dd
+    } 
+
+    if(mm<10) {
+    mm = '0'+mm
+    } 
+
+    textoFecha = [dd + '/' + mm + '/' + yyyy,yyyy + "-" + mm + "-" + dd];
+  
+    return textoFecha;
+};
 
 function obtenerDatosProyecto(){
     let infoProyecto =[];
@@ -123,8 +184,11 @@ function obtenerDatosProyecto(){
     let sProfTecnicoNombre = selectProfesorTecnico.options[optionProfTecnico].innerHTML;
     let sProfTecnicoId = selectProfesorTecnico.value;
     let bDesactivado = false;
+    let optionCliente = selectCliente.options.selectedIndex;
+    let sClienteNombre = selectCliente.options[optionCliente].innerHTML;
+    let sClienteId = selectCliente.value;
 
-    infoProyecto.push(gCodigo,gFechaCreacion,sNombre,sDescripcion,gEstado,sFechaEntrega,sPofLiderId,sProfLiderNombre,sProfTecnicoId,sProfTecnicoNombre,bDesactivado);
+    infoProyecto.push(gCodigo,gFechaCreacion,sNombre,sDescripcion,gEstado,sFechaEntrega,sPofLiderId,sProfLiderNombre,sProfTecnicoId,sProfTecnicoNombre,bDesactivado,sClienteId,sClienteNombre);
     
     bError = validar();
     if(bError == true){
@@ -154,7 +218,6 @@ function validar(){
     let regexSoloLetras = /^[a-z A-ZáéíóúÁÉÍÓÚñÑ]+$/;
     let regexSoloNumeros = /^[0-9]+$/;
     let regexLetrasNumeros = /^[a-z A-ZáéíóúÁÉÍÓÚñÑ 0-9]+$/;
-    let fecha = new Date();
 
     //Validación nombre del proyecto
     if(inputNombre.value == '' && (regexSoloLetras.test(inputNombre.value)==false) ){
@@ -194,47 +257,16 @@ function validar(){
     }else{
         selectProfesorTecnico.classList.remove('error-input');
     }
+
+       //Validación cliente del proyecto
+       if(selectCliente.value == ''){
+        selectCliente.classList.add('error-input');
+        bError = true;
+    }else{
+        selectCliente.classList.remove('error-input');
+    }
   
     return bError;
 };
-
-function ftnCreadorDropProfesor(pElemento,pListaDatos){
-
-    for (let i = 0; i < pListaDatos.length; i++) {
-        
-        let id = pListaDatos[i]['_id'];
-        let nombre = pListaDatos[i]['Nombre'];
-        let apellido = pListaDatos[i]['Apellido'];
-        let optionElement = document.createElement("option")
-        let nodeTexto = document.createTextNode( nombre + " " + apellido);
-
-        optionElement.appendChild(nodeTexto);
-        optionElement.setAttribute('value',id);
-        pElemento.appendChild(optionElement);
-        
-    }
-};
-
-function ftnFomatoFecha (pFecha){
-    let fecha = new Date();
-    let dd = fecha.getDate(pFecha);
-    let mm = fecha.getMonth(pFecha)+1;
-    let yyyy = fecha.getFullYear(pFecha);
-    let textoFecha = null;
-
-    if(dd<10) {
-        dd = '0'+dd
-    } 
-
-    if(mm<10) {
-    mm = '0'+mm
-    } 
-
-    textoFecha = [dd + '/' + mm + '/' + yyyy,yyyy + "-" + mm + "-" + dd];
-  
-    return textoFecha;
-};
-
-
 
 

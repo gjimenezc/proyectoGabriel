@@ -19,6 +19,7 @@ const inputEstado = document.querySelector('#estadoProyecto');
 const inputFechaEntrega = document.querySelector('#fechaEntrega');
 const selectProfesorLider = document.querySelector('#profesorLider');
 const selectProfesorTecnico = document.querySelector('#profesorTecnico');
+const selectCliente = document.querySelector('#clienteProyecto');
 
 //listeners---------------------------------------------------
 btnGuardarProyecto.addEventListener('click',function(){
@@ -26,25 +27,22 @@ btnGuardarProyecto.addEventListener('click',function(){
 
     let fecha = ftnFechaHoy();
     let codigo = ftnGenerarCodigo(obtenerListaProyectos());
-    let listaProfesores = obtenerLista();
     
     limpiarFormulario();
     ftnCamposAnnadidos(fecha,codigo);
-    ftnCreadorDropProfesor(selectProfesorLider,listaProfesores);
-    ftnCreadorDropProfesor(selectProfesorTecnico,listaProfesores);
 });
 
 //loads------------------------------------------------------
 window.onload = function(){
     let fecha = ftnFechaHoy();
     let codigo = ftnGenerarCodigo(obtenerListaProyectos());
-    let listaProfesores = obtenerLista();
+    let listaProfesores = obtenerListaProfesores();
+    let listaClientes = obtenerListaClientes();
 
-    limpiarFormulario();
     ftnCamposAnnadidos(fecha,codigo);
     ftnCreadorDropProfesor(selectProfesorLider,listaProfesores);
     ftnCreadorDropProfesor(selectProfesorTecnico,listaProfesores);
-    
+    ftnCreadorDropCliente(selectCliente,listaClientes);
 };
 
 //funciones-------------------------------------------------
@@ -65,8 +63,11 @@ function obtenerDatosProyecto(){
     let sProfTecnicoNombre = selectProfesorTecnico.options[optionProfTecnico].innerHTML;
     let sProfTecnicoId = selectProfesorTecnico.value;
     let bDesactivado = false;
+    let optionCliente = selectCliente.options.selectedIndex;
+    let sClienteNombre = selectCliente.options[optionCliente].innerHTML;
+    let sClienteId = selectCliente.value;
 
-    infoProyecto.push(gCodigo,gFechaCreacion,sNombre,sDescripcion,gEstado,sFechaEntrega,sPofLiderId,sProfLiderNombre,sProfTecnicoId,sProfTecnicoNombre,bDesactivado);
+    infoProyecto.push(gCodigo,gFechaCreacion,sNombre,sDescripcion,gEstado,sFechaEntrega,sPofLiderId,sProfLiderNombre,sProfTecnicoId,sProfTecnicoNombre,bDesactivado,sClienteId,sClienteNombre);
     
     bError = validar();
     if(bError == true){
@@ -96,7 +97,6 @@ function validar(){
     let regexSoloLetras = /^[a-z A-ZáéíóúÁÉÍÓÚñÑ]+$/;
     let regexSoloNumeros = /^[0-9]+$/;
     let regexLetrasNumeros = /^[a-z A-ZáéíóúÁÉÍÓÚñÑ 0-9]+$/;
-    let fecha = new Date();
 
     //Validación nombre del proyecto
     if(inputNombre.value == '' && (regexSoloLetras.test(inputNombre.value)==false) ){
@@ -136,6 +136,14 @@ function validar(){
     }else{
         selectProfesorTecnico.classList.remove('error-input');
     }
+
+       //Validación cliente del proyecto
+       if(selectCliente.value == ''){
+        selectCliente.classList.add('error-input');
+        bError = true;
+    }else{
+        selectCliente.classList.remove('error-input');
+    }
   
     return bError;
 };
@@ -144,7 +152,7 @@ function limpiarFormulario(){
     inputNombre.value = '';    
     inputDescripcion.value = '';
     inputFechaEntrega.value = '';
-}
+};
 
 
 function ftnCreadorDropProfesor(pElemento,pListaDatos){
@@ -156,6 +164,22 @@ function ftnCreadorDropProfesor(pElemento,pListaDatos){
         let apellido = pListaDatos[i]['Apellido'];
         let optionElement = document.createElement("option")
         let nodeTexto = document.createTextNode( nombre + " " + apellido);
+
+        optionElement.appendChild(nodeTexto);
+        optionElement.setAttribute('value',id);
+        pElemento.appendChild(optionElement);
+        
+    }
+};
+
+function ftnCreadorDropCliente(pElemento,pListaDatos){
+
+    for (let i = 0; i < pListaDatos.length; i++) {
+        
+        let id = pListaDatos[i]['_id'];
+        let nombre = pListaDatos[i]['Nombre'];
+        let optionElement = document.createElement("option")
+        let nodeTexto = document.createTextNode(nombre);
 
         optionElement.appendChild(nodeTexto);
         optionElement.setAttribute('value',id);

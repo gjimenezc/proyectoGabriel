@@ -17,7 +17,11 @@ module.exports.registrar = function(req, res){
             idTecnico : req.body.idTecnico,
             nombreTecnico : req.body.nombreTecnico
         }],
-        desactivado : req.body.desactivado
+        desactivado : req.body.desactivado,
+        clienteProyecto : [{
+            idCliente : req.body.idCliente,
+            nombreCliente : req.body.nombreCliente
+        }]
     });
 
     nuevoProyecto.save(function(error){
@@ -36,6 +40,23 @@ module.exports.listar = function(req, res){
         function(proyectos){
             res.send(proyectos);
         });
+};
+
+module.exports.desactivar = function(req, res){
+    
+    proyectoModel.update(
+        {_id: req.body._id}, 
+        {
+            desactivado : req.body.desactivado
+        },
+        function(error){
+            if(error){
+                res.json({success : false, msg : 'No se pudo eliminar el proyecto, ocurrió el siguiente error' + error});
+            }else{
+                res.json({success : true, msg : 'Se eliminó el proyecto con éxito'});
+            }
+        }
+    )
 };
 
 module.exports.buscarProyecto = function(req, res){

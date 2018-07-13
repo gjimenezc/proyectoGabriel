@@ -14,4 +14,14 @@ router.route('/listarEstudiantesAsignados')
         estudProy.listar(req, res);
 });
 
+router.route('/desasignarEstudiante')
+    .post(function(req, res){
+        estudProy.desasignar(req, res);
+});
+
+router.route('/asignarCoordinador')
+    .post(function(req, res){
+        estudProy.asignar_coordinador(req, res);
+});
+
 module.exports = router;
